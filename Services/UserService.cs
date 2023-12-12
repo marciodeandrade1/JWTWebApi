@@ -12,7 +12,6 @@ namespace JWTWebApi.Services
                 Id = 2, FirstName = "mytest2", LastName = "User2", Username = "test", Password = "test"
             }
         };
-
         public IEnumerable<User> GetAll()
         {
             return _users;
@@ -20,7 +19,6 @@ namespace JWTWebApi.Services
         public User GetById(int id)
         {
             return _users.FirstOrDefault(x => x.Id == id);
-
         }
     }
 }

@@ -10,23 +10,19 @@ namespace JWTWebApi.Helper
     {
         private readonly RequestDelegate _next;
         private readonly AppSettings _appSettings;
-
         public JwtMiddleware(RequestDelegate _next, IOptions<AppSettings> _appSettings)
         {
             this._next = _next;
             this._appSettings = _appSettings.Value;
-
         }
         public async Task Invoke(HttpContext context, IUserService userService)
         {
-
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             if (token != null)
                 //Validate Token
                 attachUserToContext(context, userService, token);
             _next(context);
         }
-
         private void attachUserToContext(HttpContext context, IUserService userService, string token)
         {
             try
@@ -44,16 +40,13 @@ namespace JWTWebApi.Helper
                     ValidAudience = _appSettings.Issuer
                 }, out SecurityToken validateToken);
 
-
                 var jwtToken = (JwtSecurityToken)validateToken;
                 int userId = int.Parse(jwtToken.Claims.FirstOrDefault(_ => _.Type == "Id").Value);
                 context.Items["User"] = userService.GetById(userId);
-
             }
             catch (Exception ex)
             {
                 _ = ex.Message.ToString();
-
             }
         }
     }

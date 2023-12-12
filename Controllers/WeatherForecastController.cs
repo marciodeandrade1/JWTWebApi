@@ -5,7 +5,6 @@ using Microsoft.AspNetCore;
 
 namespace JWTWebApi.Controllers
 {
-
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

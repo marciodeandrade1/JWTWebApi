@@ -26,9 +26,7 @@ namespace JWTWebApi.Services
             if (user == null) return null;
             var token = generateToken(user);
             return new AuthenticateResponse() { Token = token };
-
         }
-
         private string generateToken(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Key));
@@ -39,18 +37,12 @@ namespace JWTWebApi.Services
                     new Claim(JwtRegisteredClaimNames.Email, "test@gmail.com"),
                     //new Claim("Role", Convert.ToString(user.Role)),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-
             };
-
-
             foreach (var role in user.Role)
             {
-
                 claims.Add(new Claim("Role", Convert.ToString(role)));
             }
-
             var token = new JwtSecurityToken(_appSettings.Issuer, _appSettings.Issuer, claims, expires: DateTime.UtcNow.AddHours(1), signingCredentials: credetial);
-
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }

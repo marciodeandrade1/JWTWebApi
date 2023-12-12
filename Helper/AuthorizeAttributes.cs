@@ -8,7 +8,6 @@ namespace JWTWebApi.Helper
     public class AuthorizeAttributes : Attribute, IAuthorizationFilter
     {
         private readonly IList<Role> _roles;
-
         public AuthorizeAttributes(params Role[] _roles)
         {
             this._roles = _roles ?? new Role[] { };
